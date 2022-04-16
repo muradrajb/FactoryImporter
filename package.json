@@ -1,0 +1,28 @@
+{
+  "name": "software-engineer",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "make_Patient": "npx sequelize-cli model:generate --name Patient --attributes patientid:integer,mrn:integer,patientdob:date,isdeceased:string,dod_ts:date,gender:enum:'{male,female,male,female}',sex:string,firstname:string,lastname:string,address01:string,address02:string,address03:string,zipcode:string",
+    "make_PatientSchemas": "npx sequelize-cli model:generate --name PatientSchemas --attributes patientid:string,mrn:string,patientdob:string,isdeceased:string,dod_ts:string,gender:string,sex:string,firstname:string,lastname:string,address01:string,address02:string,address03:string,zipcode:string",
+    "make_Treatment": "npx sequelize-cli model:generate --name Treatment --attributes TreatmentID:string,PatientID:string,status:string,StartDate:string,EndDate:string,DisplayName:string,ProtocolID:string,diagnoses:string,TreatmentLine:string,NumberOfCycles:string",
+    "make_TreatmentSchemas": "npx sequelize-cli model:generate --name TreatmentSchemas --attributes TreatmentID:string,PatientID:string,status:string,StartDate:string,EndDate:string,DisplayName:string,ProtocolID:string,diagnoses:string,TreatmentLine:string,NumberOfCycles:string",
+    "create_db": "npx sequelize-cli db:migrate"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "csv-parser": "^3.0.0",
+    "express": "^4.17.3",
+    "fast-csv": "^4.3.6",
+    "has-value": "^2.0.2",
+    "inquirer": "^8.2.2",
+    "pg": "^8.7.3",
+    "sequelize": "^6.18.0"
+  },
+  "devDependencies": {
+    "sequelize-cli": "^6.4.1"
+  }
+}
