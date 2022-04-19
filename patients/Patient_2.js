@@ -23,7 +23,7 @@ module.exports =class Patient_2 extends PatientSuper {
 
     async init() {
         try {
-            await super.importFile();
+            await super.importFile(); 
             await super.processRows();
             await super.insert()
         } catch (error) {
