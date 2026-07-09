@@ -27,7 +27,7 @@ The answer is a single number between -1 and +1:
 | X (Push-Ups) | 27 | 22 | 15 | 35 | 30 | 52 | 35 | 55 | 40 | 39 |
 | Y (Sit-Ups) | 30 | 26 | 25 | 42 | 38 | 40 | 32 | 54 | 50 | 43 |
 
-Means: $\bar{x} = 35$, $\bar{y} = 38$, n = 10
+Means: $\bar{x} = 35$, $\bar{y} = 38$, $n = 10$
 
 ---
 
@@ -190,7 +190,14 @@ $$\sigma_x = \sqrt{1388 / 10} = \sqrt{138.8} \approx 11.8$$
 
 $$\sigma_y = \sqrt{858 / 10} = \sqrt{85.8} \approx 9.3$$
 
-`[WARNING]` For small samples, some use $n-1$ instead of $n$ (Bessel's correction). **Important:** For Pearson r itself, this choice cancels. Whether you use n or n-1, the r value is identical, because both numerator and denominator scale by the same factor. The n-1 correction matters for variance and standard deviation in isolation, not for r.
+`[WARNING]` For small samples, some use $n-1$ instead of $n$ (Bessel's correction).
+
+**Important:** In Pearson's formula, this choice cancels algebraically when used consistently:
+- Covariance in the numerator uses the same divisor choice.
+- Both standard deviations in the denominator use that same divisor choice.
+
+So using $n$ everywhere or $n-1$ everywhere gives the same r.
+The $n-1$ correction matters for variance, covariance, and standard deviation when computed as standalone statistics, not for r.
 
 ---
 
@@ -290,14 +297,22 @@ Why? Look at the ratios of paired elements:
 | (-13, -12) | 0.92 |
 | (-8, -8) | 1.00 |
 | (-5, -6) | 1.20 |
-| (0, 0) | undefined |
-| (0, +2) | undefined |
+| (0, 0) | 0/0 (indeterminate; this coordinate is neutral and does not constrain $\lambda$) |
+| (0, +2) | undefined (would require $0 \cdot \lambda = +2$, impossible for any finite $\lambda$; division-by-zero if ratio is attempted) |
 | (+4, +4) | 1.00 |
 | (+5, +5) | 1.00 |
 | (+17, +12) | 0.71 |
 | (+20, +16) | 0.80 |
 
-The ratios are **not constant** (0.65, 0.92, 1.00, 1.20, ...). They vary. The Rearrangement Inequality is an upper bound for **permutations of fixed values**. It says: among all ways to pair these specific 10 numbers, sorting gives the max. But the max over permutations is NOT the same as the absolute mathematical ceiling.
+`[FACT]` Proportionality $y_c = \lambda x_c$ must hold for **all** coordinates:
+- If both entries are zero, that coordinate does not constrain $\lambda$.
+- If one entry is zero and the other is non-zero (like $(0,+2)$), proportionality fails for any finite $\lambda$.
+
+The ratios are **not constant** (0.65, 0.92, 1.00, 1.20, ...), so proportionality fails.
+The $(0,+2)$ pair independently confirms this failure.
+The Rearrangement Inequality is an upper bound for **permutations of fixed values**.
+It says: among all ways to pair these specific 10 numbers, sorting gives the max.
+But the max over permutations is NOT the same as the absolute mathematical ceiling.
 
 ---
 
@@ -417,7 +432,7 @@ $$\langle x_c, y_c \rangle = 914$$
 
 $$r_A = \frac{914}{1091.3} \approx 0.838$$
 
-**Interpretation:** Students #3 and #8 are the main contributors (260 + 320 = 580 out of 914 = 63.5%). These extreme students carry the correlation. Student #6, despite having a strong X deviation (+17), has a weak Y deviation (+2), so contributes only +34.
+**Interpretation:** Students #3 and #8 are the main contributors. They contribute $260 + 320 = 580$, which is $580/914 = 63.5\\%$ of the total. These extreme students carry the correlation. Student #6, despite having a strong X deviation (+17), has a weak Y deviation (+2), so contributes only +34.
 
 ## Scenario B: Best Possible Alignment (Sorted Rearrangement)
 
