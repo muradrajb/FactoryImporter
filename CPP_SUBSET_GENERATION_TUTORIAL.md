@@ -1,4 +1,4 @@
-# Massive Complete C++ Subset Generation Tutorial
+# Comprehensive C++ Subset Generation Tutorial
 
 ## Table of Contents
 
@@ -895,8 +895,7 @@ Input:
 Output:
 
 ```cpp
-[]
-[7]
+[[], [7]]
 ```
 
 ### 3. Negative Values
