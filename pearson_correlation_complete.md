@@ -76,9 +76,11 @@ Here is the core problem that Pearson's *r* was invented to solve:
 
 The formula we will build is:
 
-> ***r*** = Σ(x_dev_i · y_dev_i) / √(SS_x · SS_y)
+> ***r*** = Σ(x_dev_i · y_dev_i) / [ceiling]
 
-But **why** this particular formula? Why these particular pieces? That is what we will discover step by step.
+We will call this ceiling **C** for now. *Why* the numerator takes the form Σ(x_dev_i · y_dev_i), *what* C actually is, and *why* the denominator must equal C will each be derived from first principles in Acts I and II. The completed formula — with C replaced by √(SS_x · SS_y) — will only be fully justified once we have gone through all the steps.
+
+But **why** these particular pieces at all? That is what we will discover step by step.
 
 ---
 
@@ -342,7 +344,7 @@ We could take absolute values (this is called the Mean Absolute Deviation, or MA
 1. **Eliminates sign cancellation** — all squares are non-negative, so extreme values cannot cancel each other out.
 2. **Amplifies extremes** — a student 5.5 hours from average contributes 30.25 to the sum, while a student 0.5 from average contributes only 0.25. This is appropriate because extreme students also dominate the cross-product sum, as we saw with Student #3.
 3. **Connects to geometry** — the sum of squares equals the squared length of the deviation vector (Act IV). This geometric connection does not work with absolute values.
-4. **Unlocks Cauchy-Schwarz** — the universal ceiling for a cross-product is expressed in terms of Euclidean lengths, which are built from sums of squares. An absolute-deviation scale cannot produce the exact Cauchy-Schwarz denominator, so squaring is not just convenient — it is the *only* choice that leads to the correct ceiling.
+4. **Unlocks the correct ceiling** — the universal bound for a cross-product is expressed in terms of Euclidean (vector) lengths, which are built from sums of squares. An absolute-deviation scale cannot produce this exact bound, so squaring is the *only* choice that leads to the right denominator. (The proof arrives in Step 6.)
 
 #### Computing SS_x and SS_y
 
@@ -397,13 +399,13 @@ These standard deviations will appear in the "sigma form" of the correlation for
 
 #### The Crucial Connection: How Individual Spreads Set the Ceiling
 
-Here is the deep insight this step provides: **the cross-product sum (numerator) is bounded by the individual spreads (SS_x and SS_y).** Intuitively:
+Here is the deep insight this step provides: **the cross-product sum (numerator) is governed by the individual spreads (SS_x and SS_y).** Intuitively:
 
 - If X does not vary much (small SS_x), there is limited "leverage" for X to pull on the cross-product.
 - If Y does not vary much (small SS_y), same thing.
 - The maximum possible cross-product happens when both variables use their full spread *in perfect coordination.*
 
-The exact form of that ceiling will emerge from a mathematical theorem in Step 6 — but to understand *why* any ceiling exists at all, we first need to see what controls the size of a sum of products.
+We do not yet know the precise form of that maximum. That will require understanding why pairing matters (Step 5) and then a formal theorem (Step 6). But we can already see that the ceiling is *determined by* SS_x and SS_y — not by anything external.
 
 #### What We Have Established and Where We Are Going
 
