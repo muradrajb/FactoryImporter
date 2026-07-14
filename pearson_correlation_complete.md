@@ -82,8 +82,6 @@ But **why** this particular formula? Why these particular pieces? That is what w
 
 ---
 
----
-
 ## ACT I — THE AGREEMENT SCORE (Building the Numerator)
 
 ### The Goal of This Act
@@ -233,8 +231,6 @@ This is the critical limitation that will drive the entire next Act.
 
 ---
 
----
-
 ## ACT II — THE CEILING (Building the Denominator)
 
 ### The Goal of This Act
@@ -310,16 +306,16 @@ One swap of two scores turned a strongly positive sum (+219) into a negative sum
 #### What These Two Problems Demand
 
 Together, these problems demand that we divide the numerator by something that:
-1. **Carries the same units** as the numerator (so units cancel)
+1. **Carries the same units** as the numerator (so unit factors cancel when we divide)
 2. **Represents the maximum possible magnitude** of the numerator for the given data spreads (so we get a fixed scale)
 
-This is exactly what the denominator √(SS_x × SS_y) will be.
+Both conditions point to the same object — a denominator built from the *individual spread of each variable*. Its exact form will emerge once we have measured that spread.
 
 #### What We Have Established and Where We Are Going
 
-**Established:** The numerator is unstable across unit changes and can swing wildly with different pairings. It is not interpretable alone.
+**Established:** The numerator is unstable across unit changes and can swing wildly with different pairings. The two problems share one root cause: the numerator combines X-units with Y-units and has no reference for what "maximum possible" looks like.
 
-**The next question:** To find the ceiling, we first need to quantify the total "reach" or "spread" of each variable separately. How spread out is X? How spread out is Y? These individual spreads will determine how large the cross-product sum can possibly get.
+**The next question:** To construct the denominator that solves both problems simultaneously, we must first ask: *how much does each variable vary on its own?* Measuring that individual spread is not just a preliminary step — it will turn out to do three distinct jobs at once for the formula.
 
 ---
 
@@ -327,17 +323,26 @@ This is exactly what the denominator √(SS_x × SS_y) will be.
 
 #### Why Are We Doing This Step?
 
-We need to measure how much X varies by itself and how much Y varies by itself — **independently of each other**. This is because the ceiling of the cross-product depends on how much "raw material" each variable has to offer. If X barely varies (everyone studies about the same amount), then even perfect alignment cannot produce a large cross-product sum. The ceiling must respect each variable's individual spread.
+We just established that the denominator must (a) carry the same units as the numerator and (b) represent the maximum possible magnitude of the numerator. Both requirements point in the same direction: the denominator must be built from each variable's *own individual spread*. But that one fact — "built from spread" — actually does **three separate jobs** simultaneously in the formula:
+
+**Job 1 — The raw material of association.** If a variable has no spread (every student studied exactly 7.5 hours), all deviations are zero, there is no "energy" for X to contribute to any relationship, and the correlation becomes undefined. Spread is not optional context — it is the prerequisite for any correlation to exist at all.
+
+**Job 2 — Setting the ceiling.** The maximum the cross-product sum can ever reach depends directly on how much X varies and how much Y varies. A dataset where X barely moves gives the numerator very little leverage. By measuring each variable's total spread, we will be able to name the hard upper bound on the numerator — which is exactly what we need for the denominator.
+
+**Job 3 — Enabling unit invariance.** When we convert hours to minutes, every x_dev multiplies by 60, so the numerator multiplies by 60. For the ratio to stay fixed, the denominator must also multiply by exactly 60. We will see that the spread-based denominator inherits this factor automatically — which is why *r* ends up the same regardless of units.
+
+We are not just doing arithmetic in this step. We are gathering the raw material that will cancel units, define the ceiling, and make *r* interpretable — all three at once.
 
 #### Why We Square the Deviations
 
 The deviations x_dev₁, x_dev₂, ..., x_dev₁₀ sum to zero (by construction — this is always true for deviations from the mean). So simply adding them up tells us nothing about spread.
 
-We could take absolute values, but **squaring** is the mathematically superior choice for three reasons:
+We could take absolute values (this is called the Mean Absolute Deviation, or MAD). But **squaring** is the mathematically superior choice for four reasons:
 
 1. **Eliminates sign cancellation** — all squares are non-negative, so extreme values cannot cancel each other out.
-2. **Amplifies extremes** — a student 5.5 hours from average contributes 30.25 to the sum, while a student 0.5 from average contributes only 0.25. This means extreme students dominate the spread measure, which is appropriate because they also dominate the cross-product sum (as we saw with Student #3).
-3. **Connects to geometry** — the sum of squares equals the squared length of the deviation vector (we will see this in Act IV), which gives Pearson's *r* a beautiful geometric interpretation.
+2. **Amplifies extremes** — a student 5.5 hours from average contributes 30.25 to the sum, while a student 0.5 from average contributes only 0.25. This is appropriate because extreme students also dominate the cross-product sum, as we saw with Student #3.
+3. **Connects to geometry** — the sum of squares equals the squared length of the deviation vector (Act IV). This geometric connection does not work with absolute values.
+4. **Unlocks Cauchy-Schwarz** — the universal ceiling for a cross-product is expressed in terms of Euclidean lengths, which are built from sums of squares. An absolute-deviation scale cannot produce the exact Cauchy-Schwarz denominator, so squaring is not just convenient — it is the *only* choice that leads to the correct ceiling.
 
 #### Computing SS_x and SS_y
 
@@ -361,18 +366,34 @@ We could take absolute values, but **squaring** is the mathematically superior c
 
 - **SS_y = 1026** — This is the "total squared reach" of exam scores around the average of 63 points. Student #3 contributes 361/1026 = 35%, and Student #8 contributes 256/1026 = 25%. Again, extreme students dominate.
 
-#### From Sums of Squares to Standard Deviations
+#### From Sums of Squares to the Full Spread Hierarchy
 
-The sum of squares is a *total* — it grows with *n*. To get a per-student typical deviation, we compute:
+The sum of squares is a *total* — it grows with *n*. To get interpretable per-student measures, we build a three-level hierarchy from SS:
 
-- **σ_x** = √(SS_x / n) = √(62.5 / 10) = √6.25 = **2.5 hours**
-- **σ_y** = √(SS_y / n) = √(1026 / 10) = √102.6 = **10.1292 points**
+**Level 1 — Sum of Squares (SS): total energy in the dataset**
+- SS_x = 62.5 total squared study-time spread
+- SS_y = 1026 total squared score spread
+- This is the "bank account" of variability. The more students you have, the larger it can be. It is not yet normalized.
 
-**Intuitive meaning:**
-- σ_x = 2.5 means: "A typical student's study time is about 2.5 hours away from the group average."
-- σ_y = 10.13 means: "A typical student's exam score is about 10 points away from the group average."
+**Level 2 — Variance (σ²): average energy per student**
+- σ_x² = SS_x / n = 62.5 / 10 = **6.25 hours²**
+- σ_y² = SS_y / n = 1026 / 10 = **102.6 points²**
+- Dividing by *n* normalizes: how much variability does a single typical student contribute? Variance answers that, but in squared units — making it hard to compare directly to the original data.
 
-These standard deviations will appear later in the "sigma form" of the correlation formula.
+**Level 3 — Standard Deviation (σ): typical distance in original units**
+- **σ_x** = √(SS_x / n) = √6.25 = **2.5 hours**
+- **σ_y** = √(SS_y / n) = √102.6 = **10.1292 points**
+- Taking the square root brings us back to the same units as the original deviations. σ_x = 2.5 means: "A typical student is about 2.5 hours away from the group average."
+
+| Spread concept | Formula | Value for X | Intuitive meaning | Role in Pearson's *r* |
+|:---|:---|:---:|:---|:---|
+| Sum of Squares (SS) | Σ(x_dev_i²) | 62.5 | Total variability across all students | Builds the denominator/ceiling |
+| Variance (σ²) | SS / n | 6.25 | Average squared deviation per student | Geometric: average squared vector coordinate |
+| Standard Deviation (σ) | √(SS / n) | 2.5 | Typical deviation in original units | Appears in the sigma form of *r* |
+
+This hierarchy is not just notation — it represents three different *levels of aggregation* of the same underlying fact: how far students typically deviate from the mean. In Act IV, we will see that all three levels have exact geometric counterparts in vector space.
+
+These standard deviations will appear in the "sigma form" of the correlation formula in Step 10.
 
 #### The Crucial Connection: How Individual Spreads Set the Ceiling
 
@@ -382,13 +403,13 @@ Here is the deep insight this step provides: **the cross-product sum (numerator)
 - If Y does not vary much (small SS_y), same thing.
 - The maximum possible cross-product happens when both variables use their full spread *in perfect coordination.*
 
-The exact mathematical ceiling will be √(SS_x × SS_y) — but to understand *why*, we need to first understand what controls the magnitude of a sum of products.
+The exact form of that ceiling will emerge from a mathematical theorem in Step 6 — but to understand *why* any ceiling exists at all, we first need to see what controls the size of a sum of products.
 
 #### What We Have Established and Where We Are Going
 
-**Established:** SS_x = 62.5 and SS_y = 1026 quantify the total variability in each variable. These are the "raw materials" that constrain how large the cross-product can be.
+**Established:** SS_x = 62.5 and SS_y = 1026 quantify the total variability in each variable. Through the SS → Variance → SD hierarchy, they express this variability at three levels of normalization. Together they are the "raw materials" that constrain how large the cross-product can ever be.
 
-**The next question:** Why does √(SS_x × SS_y) specifically give the ceiling? To understand this, we first need to see *what makes a sum of products large or small* — which comes down to how you pair the terms.
+**The next question:** *Why* does pairing matter? Why does matching large X-deviations with large Y-deviations produce a larger sum than mismatching them? Understanding this will make the ceiling feel geometrically inevitable rather than mathematically imposed.
 
 ---
 
@@ -504,7 +525,7 @@ This is why √(SS_x × SS_y) is the *natural* denominator for Pearson's *r*: it
 
 **Established:** The denominator √(SS_x × SS_y) = 253.2291 is a hard mathematical ceiling on the numerator's magnitude. It comes from the Cauchy-Schwarz inequality and depends only on the individual spreads of X and Y.
 
-**The next question:** Can we *verify* this ceiling experimentally? What happens if we keep the same deviation values but try different pairings? This will make the ceiling feel concrete rather than abstract.
+**The next question:** A theorem proved in symbols is convincing but still abstract. We need to *see* it breathe in actual numbers — to confirm that no pairing of the real deviation values can breach 253.23, and to discover how much of that ceiling our actual data realises. We do this by freezing the deviations and changing only the pairing.
 
 ---
 
@@ -651,8 +672,6 @@ This hierarchy shows that *r* is not just about direction — it measures **prop
 
 ---
 
----
-
 ## ACT III — THE COMPLETE FORMULA AND ITS INVARIANCE
 
 ### The Goal of This Act
@@ -699,7 +718,7 @@ We have computed a raw agreement (219) and a ceiling (253.23). The ratio of thes
 
 **Established:** *r* is a ratio of actual to maximum possible agreement, giving a value between −1 and +1 that is interpretable as "fraction of potential alignment achieved."
 
-**The next question:** Let us now write the full formula in its standard forms and show explicitly where each piece came from in our construction.
+**The next question:** The ratio is clear conceptually. But every statistics textbook, every research paper, every software output writes *r* in one of two standard symbolic forms. We need to translate our step-by-step construction into those forms — not as a formality, but so you can read any published formula and immediately know *which piece does which job*.
 
 ---
 
@@ -836,8 +855,6 @@ This is the same cancellation mechanism we saw in Step 8: when y_dev = c × x_de
 
 ---
 
----
-
 ## ACT IV — THE GEOMETRIC MEANING
 
 ### The Goal of This Act
@@ -959,15 +976,15 @@ Which means: the cosine of any angle is between −1 and +1. That is geometrical
 
 **Established:** Pearson's *r* = cos(θ) where θ is the angle between the deviation vectors in *n*-dimensional space. Our data's vectors are 30.14° apart, corresponding to strong but imperfect alignment.
 
-**The next question:** How does this geometric view connect back to the familiar statistical concepts of variance and standard deviation?
+**The next question:** We now have two complete languages for *r* — the algebraic language of sums and ratios, and the geometric language of angles and vectors. But statisticians write *r* in a third language: covariance divided by standard deviations. Step 14 is the Rosetta Stone moment — it shows that all three languages say exactly the same thing, and that the concepts of variance and standard deviation are not separate inventions but simply the algebraic and geometric spread measures (SS and vector length) re-expressed per student.
 
 ---
 
-### STEP 14 — Connecting Geometry to Variance and Standard Deviation
+### STEP 14 — The Rosetta Stone: Variance, Standard Deviation, and the Three Languages of *r*
 
 #### Why Are We Doing This Step?
 
-We have now built two views of the same formula — the algebraic view (agreement/ceiling) and the geometric view (cosine of angle). This final step connects them to the most common statistical language: variance and standard deviation. This shows that all three perspectives (algebraic, geometric, statistical) are describing *exactly the same thing* in different languages.
+We have built *r* from two directions: algebraically (as a ratio of sums) and geometrically (as a cosine of angle). The statistical language of covariance and standard deviations is a third dialect of the same idea. This step is the **Rosetta Stone** — it translates between all three, showing that Variance, Standard Deviation, and the concepts from Step 4 are all the same numbers wearing different clothes. Whoever invented standard deviation and whoever invented dot products were unknowingly describing the same geometry of spread.
 
 #### Variance as Average Squared Vector Coordinate
 
@@ -1009,9 +1026,7 @@ All three rows for *r* give the same number because they are three descriptions 
 
 #### What We Have Established
 
-**Established:** Variance is average squared vector length, standard deviation is scaled vector length, and the sigma form of *r* is the geometric dot-product formula divided through by *n*. All perspectives converge on the same answer: **0.8648**.
-
----
+**Established:** Variance is the SS (total spread) normalized per student; standard deviation is variance square-rooted back to original units; and σ_x × σ_y is simply the Pearson denominator divided by *n*. The sigma form of *r* is identical to the dot-product cosine formula — they differ only by a factor of *n* that appears in both numerator and denominator and cancels. All three perspectives converge on one irreducible truth: **Pearson's *r* measures how closely the pattern of deviations in X matches the pattern of deviations in Y, normalized against the maximum possible match given each variable's own spread.**
 
 ---
 
@@ -1019,7 +1034,7 @@ All three rows for *r* give the same number because they are three descriptions 
 
 ### The Story in One Paragraph
 
-We wanted a single number measuring how strongly X and Y move together. We centered the data (Step 1) to get relative positions, multiplied paired deviations (Step 2) to detect agreement, summed them to get a raw score (219). But this score has units and no scale (Step 3), so we measured each variable's individual spread (Step 4), understood why pairing controls magnitude (Step 5), invoked the Cauchy-Schwarz law to find the ceiling (Step 6, ceiling = 253.23), verified it with scenarios (Step 7), and showed r = 1 requires exact proportionality (Step 8). Dividing agreement by ceiling gives *r* = 0.8648 (Steps 9-10), which is unit-invariant (Step 11). Geometrically, this ratio equals the cosine of the angle (30.14°) between the deviation vectors (Steps 12-14).
+We wanted a single number measuring how strongly X and Y move together. We centered the data (Step 1) to get relative positions, multiplied paired deviations (Step 2) to detect agreement, summed them to get a raw score (219). But this score has units and no scale (Step 3), so we measured each variable's individual spread across three levels — SS, Variance, and SD (Step 4), understood why pairing controls magnitude (Step 5), invoked the Cauchy-Schwarz law to find the ceiling (Step 6, ceiling = 253.23), verified it with scenarios (Step 7), and showed r = 1 requires exact proportionality (Step 8). Dividing agreement by ceiling gives *r* = 0.8648 (Steps 9-10), which is unit-invariant (Step 11). Geometrically, this ratio equals the cosine of the angle (30.14°) between the deviation vectors, and in Step 14 the algebraic, geometric, and statistical languages of *r* are shown to be three dialects of one truth.
 
 ### The Structured Outline
 
@@ -1028,11 +1043,11 @@ We wanted a single number measuring how strongly X and Y move together. We cente
 2. Multiply row-by-row → Σ(x_dev × y_dev) = 219
 
 **ACT II — CEILING (Denominator)**
-3. Why 219 alone fails: unit-sensitive, pairing-sensitive
-4. Compute spread totals: SS_x = 62.5, SS_y = 1026
+3. Why 219 alone fails: unit-sensitive and pairing-sensitive → denominator must cancel units and set maximum
+4. Spread hierarchy (SS → Variance → SD): three jobs at once — raw material, ceiling, unit invariance
 5. Pairing principle: largest-with-largest maximizes sums
 6. Cauchy-Schwarz ceiling: |numerator| ≤ √(SS_x × SS_y) = 253.2291
-7. Four scenarios verify the ceiling experimentally
+7. Four scenarios verify the ceiling by changing only pairing
 8. r = 1 requires y_dev_i = c × x_dev_i (exact proportionality)
 
 **ACT III — FORMULA + INVARIANCE**
@@ -1043,7 +1058,7 @@ We wanted a single number measuring how strongly X and Y move together. We cente
 **ACT IV — GEOMETRY**
 12. Deviation vectors in *n*-D; lengths = √SS
 13. r = cos(θ); θ = 30.14° for our data
-14. Variance = ‖d‖²/n; all three perspectives converge
+14. Rosetta Stone: Variance = SS/n = ‖d‖²/n; SD = ‖d‖/√n; all three perspectives are one truth
 
 ---
 
@@ -1055,16 +1070,16 @@ We wanted a single number measuring how strongly X and Y move together. We cente
 | x̄ | 7.5 | Step 1 | Average study hours | Center for X |
 | ȳ | 63 | Step 1 | Average exam score | Center for Y |
 | Σ(x_dev × y_dev) | 219 | Step 2 | Raw agreement score | **Numerator** |
-| SS_x | 62.5 | Step 4 | Total squared spread in X | Denominator component |
-| SS_y | 1026 | Step 4 | Total squared spread in Y | Denominator component |
-| √(SS_x × SS_y) | 253.2291 | Step 6 | Maximum possible |numerator| | **Denominator** |
+| SS_x | 62.5 | Step 4 | Total squared spread in X (3 jobs: raw material / ceiling / unit invariance) | Denominator component |
+| SS_y | 1026 | Step 4 | Total squared spread in Y (same 3 jobs) | Denominator component |
+| σ_x² (variance) | 6.25 | Step 4 | SS_x / n — average squared deviation per student | Geometric: average squared vector coordinate |
+| σ_y² (variance) | 102.6 | Step 4 | SS_y / n — average squared deviation per student | Geometric: average squared vector coordinate |
+| σ_x | 2.5 | Step 4 | √variance — typical X distance from x̄ in original units | Sigma form denominator |
+| σ_y | 10.1292 | Step 4 | √variance — typical Y distance from ȳ in original units | Sigma form denominator |
+| √(SS_x × SS_y) | 253.2291 | Step 6 | Maximum possible magnitude of numerator (Cauchy-Schwarz) | **Denominator / ceiling** |
 | **r (actual)** | **0.8648** | Step 9 | Fraction of maximum alignment achieved | **The coefficient** |
 | r (best sort) | 0.9833 | Step 7 | Near-max with same-direction pairing | Benchmark |
 | r (worst sort) | −0.9517 | Step 7 | Near-max negative alignment | Benchmark |
 | r (random) | 0.1501 | Step 7 | Minimal alignment | Benchmark |
-| σ_x | 2.5 | Step 4 | Typical X distance from x̄ | Sigma form denominator |
-| σ_y | 10.1292 | Step 4 | Typical Y distance from ȳ | Sigma form denominator |
-| cov(X, Y) | 21.9 | Step 10 | Average co-movement per student | Sigma form numerator |
+| cov(X, Y) | 21.9 | Step 10 | Numerator / n — average co-movement per student | Sigma form numerator |
 | θ (angle) | 30.14° | Step 13 | Angle between deviation vectors | Geometric interpretation |
-| σ_x² (variance) | 6.25 | Step 14 | Average squared X deviation | Connects to vector length |
-| σ_y² (variance) | 102.6 | Step 14 | Average squared Y deviation | Connects to vector length |
